@@ -1,130 +1,143 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>MAPA</title>
+    <title>Cadastro de Livros</title>
     <style>
-        .container-form {
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #5a0080;
+        }
+
+        form {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: .5rem;
-            border: 1px solid black;
-            padding: 1rem;
-            border-radius: 8px;
-            max-width: 400px;
-            margin: 40px auto;
-
-            form {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-                gap: 1rem;
-
-                div {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: start;
-                    gap: 1rem;
-
-                    label {
-                        width: 20%;
-                        font-size: 1.5rem;
-                    }
-
-                    input{
-                        width: 80%;
-                        border-radius: 10px;
-                        padding: .5rem;
-                        font-size: 1rem;
-                    }
-                }
-            }
-
-            button {
-                background-color: darkmagenta;
-                padding: .5rem;
-                border: none;
-                border-radius: 20px;
-                color: whitesmoke;
-                cursor: pointer;
-                font-size: 1.5rem;
-                width: 100%;
-            }
+            gap: 1rem;
         }
 
-        .lista {
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            background-color: #7b1fa2;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #6a1b9a;
+        }
+
+        .livro {
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            gap: .5rem;
-            padding: .3rem;
-            border: 1px solid black;
+            border: 1px solid #ddd;
+            border-left: 5px solid #7b1fa2;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            background-color: #fafafa;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .delete-form {
+        .livro-info {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .livro p {
             margin: 0;
-
-            button {
-                cursor: pointer;
-                padding: .5rem;
-                border: none;
-                background-color: lightpink;
-                color: whitesmoke;
-            }
         }
+
+        .livro form {
+            margin-top: 0.5rem;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
     </style>
-
 </head>
-
 <body>
+<div class="container">
+    <h2>Cadastrar Livro</h2>
 
-<div class="container-form">
-    <h2>Cadastrar Livros</h2>
+    <!-- Mostra mensagens de erro -->
+    <%
+        String mensagemErro = (String) request.getAttribute("mensagemErro");
+        if (mensagemErro != null) {
+    %>
+    <div class="error"><%= mensagemErro %></div>
+    <% } %>
+
+    <!-- Formulário -->
     <form action="books" method="post">
-        <div>
-            <label for="titulo">Título: </label>
-            <label>
-                <input type="text" name="titulo" required/>
-            </label>
-        </div>
-        <div>
-            <label  for="autor">Autor: </label>
-            <label>
-                <input type="text" name="autor" required/>
-            </label>
-        </div>
-        <div>
-            <label for ="ano">Ano: </label>
-            <label>
-                <input type="number" name="ano" required/>
-            </label>
-        </div>
-        <div>
-            <label for ="isbn">ISBN: </label>
-            <label>
-                <input type="text" name="isbn" required/>
-            </label>
-        </div>
+        <label for="titulo">Título:</label>
+        <label>
+            <input type="text" name="titulo" required />
+        </label>
+
+        <label for="autor">Autor:</label>
+        <label>
+            <input type="text" name="autor" required />
+        </label>
+
+        <label for="ano">Ano:</label>
+        <label>
+            <input type="number" name="ano" required />
+        </label>
+
+        <label for="isbn">ISBN:</label>
+        <label>
+            <input type="text" name="isbn" required />
+        </label>
+
         <button type="submit">Cadastrar</button>
     </form>
 
-    <% if (request.getAttribute("mensagemErro") != null) { %>
-    <p class="mensagem-erro"><%= request.getAttribute("mensagemErro") %></p>
-    <% } %>
+    <hr />
 
-    <% if (request.getAttribute("htmlLivros") != null) { %>
-    <div class="lista-container">
+    <!-- lista de livros -->
+    <div>
         <%= request.getAttribute("htmlLivros") %>
     </div>
-    <% } %>
-
 </div>
-
 </body>
-
-
 </html>

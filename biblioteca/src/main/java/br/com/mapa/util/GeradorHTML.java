@@ -12,20 +12,28 @@ public class GeradorHTML {
         for (Livro livro : books) {
 
             htmlLivros
-                    //Lista de livros
-                    .append("<div class=\"lista\">")
-                    .append("<p><strong> Titulo: </strong>").append(livro.getTitulo()).append("</p>")
-                    .append("<p><strong> Autor: </strong>").append(livro.getAutor()).append("</p>")
-                    .append("<p><strong> Ano: </strong>").append(livro.getAno()).append("</p>")
-                    .append("<p><strong> ISBN: </strong>").append(livro.getIsbn()).append("</p>")
-                    .append("<p><strong> id: </strong>").append(livro.getId()).append("</p>")
-                    //Botão para realizar a exclusão
-                    .append("<form class=\"delete-form\" method='post' action='")
-                    .append(request.getContextPath()).append("/books' style='display:inline;'> ")
+                    // Container do livro
+                    .append("<div class=\"livro\">")
+                    .append("<div class=\"livro-info\">")
+
+                    // Mostra os atributos do livro em linha
+                    .append("<p><strong>ID:</strong> ").append(livro.getId()).append("</p>")
+                    .append("<p><strong>Título:</strong> ").append(livro.getTitulo()).append("</p>")
+                    .append("<p><strong>Autor:</strong> ").append(livro.getAutor()).append("</p>")
+                    .append("<p><strong>Ano:</strong> ").append(livro.getAno()).append("</p>")
+                    .append("<p><strong>ISBN:</strong> ").append(livro.getIsbn()).append("</p>")
+
+                    .append("</div>")
+
+                    // Formulário de exclusão para cada livro
+                    .append("<form method='post' action='")
+                    .append(request.getContextPath()).append("/books'>")
                     .append("<input type='hidden' name='action' value='delete' />")
                     .append("<input type='hidden' name='id' value='")
-                    .append(livro.getId()).append("' /s").append("<button type='submit'>EXCLUIR</button>")
-                    .append("</form>").append("</div>");
+                    .append(livro.getId()).append("' />")
+                    .append("<button type='submit'>Excluir</button>")
+                    .append("</form>")
+                    .append("</div>");
         }
         return htmlLivros.toString();
     }

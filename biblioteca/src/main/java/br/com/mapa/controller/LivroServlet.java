@@ -37,7 +37,7 @@ public class LivroServlet extends HttpServlet {
         String htmlLivros = GeradorHTML.gerar(request, books);
         request.setAttribute("htmlLivros", htmlLivros);
         // Encaminha para a página JSP que tem os livros
-        request.getRequestDispatcher("/lista.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/lista.jsp").forward(request, response);
     }
 
     @Override
@@ -61,10 +61,10 @@ public class LivroServlet extends HttpServlet {
         // Cadastro de novo livro
         try {
             Livro livro = new Livro();
-            livro.setTitulo(request.getParameter("titulo").toUpperCase());
-            livro.setAutor(request.getParameter("autor").toUpperCase());
+            livro.setTitulo(request.getParameter("titulo"));
+            livro.setAutor(request.getParameter("autor"));
             livro.setAno(Integer.parseInt(request.getParameter("ano")));
-            livro.setIsbn(request.getParameter("isbn").toUpperCase());
+            livro.setIsbn(request.getParameter("isbn"));
 
             livro.validacao(); // faz a verificação dos campos
             books.add(livro); // adiciona à lista em memória
